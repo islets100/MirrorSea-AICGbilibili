@@ -1,10 +1,4 @@
-﻿正在优化工具选择...
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/java/pom.xml#1-1)，行 1 到 150
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/README.md)
-
-你好！用一个高质量的开源/复刻项目来准备面试是非常好的策略，特别是像你手头这个**仿B站的微服务项目（Aigcbilibili）**。它的业务场景复杂（高并发、大文件、实时检索、即时通讯），使用的技术栈也非常贴合目前国内大厂/中大厂的真实需求。
+﻿你好！用一个高质量的开源/复刻项目来准备面试是非常好的策略，特别是像你手头这个**仿B站的微服务项目（Aigcbilibili）**。它的业务场景复杂（高并发、大文件、实时检索、即时通讯），使用的技术栈也非常贴合目前国内大厂/中大厂的真实需求。
 
 既然你没有实际参与开发，我们的核心目标就是要**“化被动为主动”**，把这个项目的核心代码吃透，让你在面试时能像亲手写的一样对答如流。
 
@@ -62,26 +56,6 @@
 
 
 
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/knowledgebase.md)
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/java/video/src/main/java/ljl/bilibili/video)
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/java/video/src/main/java/ljl/bilibili/video/service)
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/java/video/src/main/java/ljl/bilibili/video/service/video_production)
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/java/video/src/main/java/ljl/bilibili/video/service/video_production/impl)
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/java/video/src/main/java/ljl/bilibili/video/service/video_production/impl/UploadAndEditServiceImpl.java#1-1)，行 1 到 150
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/java/video/src/main/java/ljl/bilibili/video/service/video_production/impl/UploadAndEditServiceImpl.java#150-150)，行 150 到 310
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/java/video/src/main/java/ljl/bilibili/video/service/video_production/impl/UploadAndEditServiceImpl.java#310-310)，行 310 到 350
-
-读取 [](file:///f%3A/aigcbilibili-main/aigcbilibili-main/java/video/src/main/java/ljl/bilibili/video/service/video_production/impl/MinioServiceImpl.java)
-
-Ran terminal command: $content = @"
-
 ---
 
 ### 第三步：核心技术难点与亮点深挖
@@ -116,8 +90,8 @@ Ran terminal command: $content = @"
     *   **秒杀回答：** “不是。如果把几百 M 的流拉回来拼装会把内存直接撑爆。我使用的是 MinIO 的 `composeObject` 接口，它等于把合并指令交给文件服务器，在 MinIO 节点磁盘端内部完成了文件块的接合实现零网路拷贝开销，这对于视频项目来说是最好的吞吐量保护策略。”
 *   **问：如果有用户传了一半不传了，MinIO 里剩下的垃圾分片怎么清理，防止磁盘撑爆？**
     *   **答复（结合可用技术栈）：** 这里完全可以结合我们现有集成的 **XXL-JOB 分布式定时任务**，每天凌晨跑一次清理批处理。去检索数据库或者 Redis，查出超过 24 小时 `totalCount` 依然没满或者一直没有最终入库确认的分片标记记录，获得片名后调用 MinIO 的批量删除（`removeObjects`）接口清理垃圾片，保证项目良性运作机制。
-"@
-$content | Out-File -FilePath 'f:\aigcbilibili-main\aigcbilibili-main\knowledgebase.md' -Encoding UTF8 -Append
+    "@
+    $content | Out-File -FilePath 'f:\aigcbilibili-main\aigcbilibili-main\knowledgebase.md' -Encoding UTF8 -Append
 
 
 我已经顺着你的思路，将**我们的复习策略**与**本项目第一个核心技术亮点（大文件上传与断点续传）**的剥析，完整地写入并提取到了你刚才建好的 knowledgebase.md 知识库文件中。
@@ -217,7 +191,7 @@ esumableIdentifier。
     *   **高分答复**：业务服务器**没有**处理数据合并！我们利用了 MinIO (S3协议) 的 composeObject 方法，直接将合并指令下发给对象存储服务器，让其在磁盘端零网路拷贝开销地完成拼装，是最优吞吐量方案。
 *   **问：用户中途断网放弃上传，残留的垃圾碎片怎么清？**
     *   **高分答复**：结合现有的 **XXL-JOB 分布式定时任务**，每天凌晨扫描超过 24 小时未完结的上传记录凭证，调用 MinIO 接口批量删除 
-emoveObjects，保证磁盘健康。
+    emoveObjects，保证磁盘健康。
 
 ---
 
