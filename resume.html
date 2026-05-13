@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任晓华 - 个人简历 - 天津大学</title>
+    <style>
+        :root {
+            --primary-color: #1a5a8a;
+            --text-color: #333;
+            --secondary-text: #666;
+            --tag-bg: #f0f2f5;
+            --edu-tag-bg: #ececec;
+            --edu-tag-color: #5d3b1a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            line-height: 1.5;
+            color: var(--text-color);
+            background-color: #f5f5f5;
+            padding: 15px 0;
+            /* 缩小屏幕预览时的上下间距 */
+        }
+
+        /* 严格 A4 尺寸 */
+        .resume-container {
+            width: 210mm;
+            min-height: 297mm;
+            margin: 0 auto;
+            background: #fff;
+            /* 重点优化：顶部间距改为 20px，左右 45px，底部 30px */
+            padding: 20px 30px 20px 30px;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- 头部区域 --- */
+        .header {
+            text-align: center;
+            margin-bottom: 18px;
+            /* 稍微压缩头部下方的间距 */
+            position: relative;
+        }
+
+        /* 新增：左上角校徽样式 */
+        .logo-left {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 25px;
+            /* 您可以通过修改这个高度来控制校徽大小 */
+            width: auto;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 5px;
+            margin-bottom: 6px;
+        }
+
+        .job-intent {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .contact-info {
+            font-size: 12.5px;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .photo {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 85px;
+            height: 110px;
+            border: 1px solid #eee;
+        }
+
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- 标题间距 --- */
+        .section-title {
+            color: var(--primary-color);
+            font-size: 17px;
+            font-weight: bold;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 3px;
+            margin: 14px 0 10px 0;
+            clear: both;
+        }
+
+        /* --- 教育背景 --- */
+        .edu-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .edu-left-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .edu-school {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .edu-tags {
+            display: flex;
+            gap: 8px;
+            /* 标签之间的小缝隙 */
+        }
+
+        .edu-tags span {
+            background-color: var(--edu-tag-bg);
+            color: var(--edu-tag-color);
+            padding: 1px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .edu-date {
+            color: var(--secondary-text);
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .edu-major {
+            font-size: 13.5px;
+            font-weight: bold;
+            color: #444;
+            margin-top: 3px;
+        }
+
+        .edu-courses {
+            font-size: 12px;
+            color: #666;
+            margin-top: 2px;
+        }
+
+        /* --- 项目经历 --- */
+        .project-item {
+            margin-bottom: 18px;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .project-name {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+
+        .tag {
+            background-color: var(--tag-bg);
+            padding: 1px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            color: #555;
+        }
+
+        .project-desc {
+            font-size: 13px;
+            margin-bottom: 6px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .project-points {
+            list-style: disc;
+            margin-left: 20px;
+            font-size: 13px;
+        }
+
+        .project-points li {
+            margin-bottom: 4px;
+        }
+
+        strong {
+            font-weight: bold;
+            color: #000;
+        }
+
+        /* --- 专业技能 --- */
+        .skills-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills-list li {
+            font-size: 13px;
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .skills-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+
+            .resume-container {
+                box-shadow: none;
+                margin: 0 auto;
+                width: 210mm;
+                min-height: 297mm;
+                padding: 20px 45px 30px 45px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="resume-container">
+
+        <!-- 头部信息 -->
+        <div class="header">
+            <!-- 这里是新加的左上角图片 -->
+            <img src="D:/学校文件/证照/tju_tp_cn.png" alt="天津大学校徽" class="logo-left">
+
+            <div class="name">任晓华</div>
+            <div class="job-intent">求职意向：后端开发实习生</div>
+            <div class="contact-info">
+                <span>电话：(+86) 131-5083-8513</span> |
+                <span>邮箱：rxh@tju.edu.cn</span> |
+                <span>微信：CY31583805</span>
+            </div>
+            <div class="photo">
+                <img src="D:/学校文件/证照/屏幕截图%202026-03-23%20202242.png" alt="个人照片">
+            </div>
+        </div>
+
+        <!-- 教育背景 -->
+        <div class="section-title">教育背景</div>
+        <div class="edu-info">
+            <div class="edu-left-group">
+                <div class="edu-school">天津大学</div>
+                <div class="edu-tags">
+                    <span>985</span>
+                    <span>211</span>
+                    <span>双一流</span>
+                </div>
+            </div>
+            <div class="edu-date">2023.08 - 2027.07</div>
+        </div>
+        <div class="edu-major">软件学院 | 软件工程</div>
+        <div class="edu-courses">
+            <strong>主修课程：</strong>数据结构与算法、操作系统、计算机网络、数据库系统原理、软件体系结构、设计模式、分布式系统、面向对象编程。
+        </div>
+
+        <!-- 项目经历 -->
+        <div class="section-title">项目经历</div>
+
+        <!-- 项目1 -->
+        <div class="project-item">
+            <div class="project-header">
+                <div class="project-name">▶ AigcBilibili —— 高并发微服务弹幕视频平台</div>
+            </div>
+            <div class="tech-stack">
+                <span class="tag">Spring Cloud Alibaba</span><span class="tag">MySQL</span><span
+                    class="tag">Redis</span>
+                <span class="tag">RocketMQ</span><span class="tag">ElasticSearch</span><span
+                    class="tag">MinIO</span><span class="tag">WebSocket</span><span class="tag">XXL-JOB</span>
+            </div>
+            <div class="project-desc">
+                项目简介：一个基于 Spring Cloud Alibaba
+                构建的高并发视频社区，涵盖视频发布、弹幕互动、全文检索及实时私聊等核心模块。针对大文件存储、异构数据同步及海量互动读写痛点进行了深度架构重构与微服务级别优化。
+            </div>
+            <ul class="project-points">
+                <li><strong>大文件断点续传与零拷贝合并：</strong>基于 MD5 特征值实现分片秒传与断点跳过；合并阶段摒弃传统应用层内存流拼接，直接调用 MinIO 原生
+                    <strong>composeObject</strong> 接口在 S3 存储底层完成大块文件“零拷贝”接合，极大降低业务节点 I/O 及带宽开销，结合 XXL-JOB 定时安全回收沉尸碎片。
+                </li>
+                <li><strong>海量搜索与 ES 异构缓冲同步：</strong>引入 <strong>ElasticSearch</strong> 支撑百万级文本聚合检索。在处理异构数据同步时，摒弃原生 MQ
+                    直写，创新设计 <strong>RocketMQ + Redis List 缓冲池 + 定时大原生 Bulk</strong> 的异步宽门架构，将上万次网路更新收敛为单次防击穿批处理，保护 ES
+                    底层合并性能。</li>
+                <li><strong>BloomFilter 拦截与熔断重试兜底：</strong>在向 ES 同步清洗数据时，前置接入 <strong>Guava 布隆过滤器</strong>精准拦截伪造及不存在更新
+                    ID，免除 99% 的异常报错解析消耗；进一步封装 <code>BulkResponse</code> 层异常状态位，实现带最大阈值的递归回旋补偿模型，完美兜底网络瞬时抖动。</li>
+                <li><strong>高频演进隔离与写缓冲架构（弹幕/点赞）：</strong>针对热门视频瞬时十万级点赞、弹幕等流量引发的行级锁等待与 DB 雪崩隐患，规划并引入 <strong>Redis
+                        Set/Hash</strong> 作主承接辅以定时双写同步，并结合 <strong>RocketMQ</strong> 缓冲队列限制并发写速落盘，支撑抗压扩容。</li>
+                <li><strong>WebSocket 实时长连与跨服路由：</strong>主导搭建双向通讯模块并配合 <code>@EventListener</code> 异步解耦大模型长回复；面对多机部署本地
+                    Map 会话隔离断链痛点，规划并推演基于 <strong>Redis Pub/Sub 广播机制</strong> 的全网全局寻址与跨集群消息精准投递。</li>
+            </ul>
+        </div>
+
+        <!-- 项目2 -->
+        <div class="project-item">
+            <div class="project-header">
+                <div class="project-name">🚌 CityHub —— 智能生活服务平台</div>
+            </div>
+            <div class="tech-stack">
+                <span class="tag">SpringBoot</span><span class="tag">MySQL</span><span class="tag">Redis</span>
+                <span class="tag">Lua</span><span class="tag">MyBatis-Plus</span><span class="tag">RocketMQ</span>
+            </div>
+            <div class="project-desc">
+                项目简介：CityHub 是一个本地生活服务平台，提供商家信息查询、优惠券秒杀、推广优惠信息等功能，针对秒杀场景下的性能瓶颈，基于 <strong>缓存架构 与 消息队列</strong>
+                进行了性能深度优化，显著提升高并发场景下的系统稳定性。
+            </div>
+            <ul class="project-points">
+                <li>设计 <strong>Redis + Lua</strong> 实现高并发库存扣减与一人一单校验，解决超卖问题，保障数据一致性。</li>
+                <li>引入 <strong>RocketMQ</strong> 将秒杀链路中的下单流程异步解耦，实现核心接口流量削峰并提升秒杀场景并发性能。</li>
+                <li>使用逻辑过期方案防止 Redis 热点 Key 的<strong>缓存击穿</strong>问题，使用缓存空值方案解决 Redis Key 的<strong>缓存穿透</strong>问题。</li>
+                <li>更新数据库后删除缓存，删除失败采取 <strong>RocketMQ 补偿重试</strong>，结合 TTL 兜底共同确保数据<strong>最终一致性</strong>。</li>
+                <li>基于 <strong>Redis + AOP + 注解实现滑动窗口限流</strong>，支持全局/IP/用户多维度，防止系统过载、刷券、爬虫。</li>
+                <li>基于 <strong>延迟队列</strong> 实现分钟级定时任务，精准扫描并自动关闭超时未支付订单，有效释放被占用的库存资源。</li>
+                <li>使用乐观锁解决支付回调与超时关单状态下的并发问题，确保订单状态流转的准确性与数据一致性。</li>
+            </ul>
+        </div>
+
+        <!-- 专业技能 -->
+        <div class="section-title">专业技能</div>
+        <ul class="skills-list">
+            <li>熟练掌握 JavaSE 核心知识，理解<strong>常用集合及数据结构、面向对象、异常、反射、泛型</strong>等；</li>
+            <li>熟悉 <strong>MySQL</strong>，理解事务、隔离级别、索引、MVCC、三大日志、锁机制、慢SQL优化等；</li>
+            <li>熟悉 <strong>Redis</strong>，理解其 5 种核心数据结构、持久化策略、分布式锁、<strong>缓存穿透、击穿、雪崩及解决方案</strong>等；</li>
+            <li>熟悉 <strong>RocketMQ</strong> 消息中间件，理解<strong>可靠传输、幂等去重、顺序消费、消息堆积问题及解决方案</strong>等；</li>
+            <li>熟悉 <strong>JUC 并发编程</strong>，了解线程池、ThreadLocal、Synchronized、CAS、JMM等；</li>
+            <li>熟悉 <strong>JVM 内存结构</strong>，了解垃圾回收机制、双亲委派机制、类生命周期、常见问题的定位与分析等；</li>
+            <li>熟悉 SpringBoot、MyBatis-Plus 等常用框架的使用，了解 <strong>IOC、AOP、Spring事务</strong>等；</li>
+            <li>熟悉 IDEA、Maven、Git 等配置协作工具，熟悉 <strong>Claude Code、Codex</strong> 等新兴 AI 编程工具。</li>
+        </ul>
+
+    </div>
+
+</body>
+
+</html>

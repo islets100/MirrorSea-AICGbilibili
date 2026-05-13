@@ -15,16 +15,6 @@
         <module name="notice" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="bilibili" target="1.8" />
-      <module name="chat" target="1.8" />
-      <module name="common" target="1.8" />
-      <module name="gateway" target="1.8" />
-      <module name="notice" target="1.8" />
-      <module name="search" target="1.8" />
-      <module name="user_center" target="1.8" />
-      <module name="video" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
