@@ -2,8 +2,9 @@ package ljl.bilibili.user_center.controller.user_info;
 import io.minio.errors.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import ljl.bilibili.client.pojo.UserInfoBatchRequest;
+import ljl.bilibili.client.pojo.UserInfoBatchResponseItem;
 import ljl.bilibili.user_center.service.user_info.impl.UserInfoServiceImpl;
-import ljl.bilibili.user_center.vo.request.self_center.EditUserInfoRequest;
 import ljl.bilibili.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/userInfo")
@@ -30,11 +32,19 @@ public class UserInfoController {
         log.info("1");
         return userInfoService.getUserInfo(selfId,visitedId);
     }
-    //    @GetMapping("/getFansAndIdolCount/{userId}")
-//    @ApiOperation("登录后获取用户粉丝数和关注数")
-//    public UserInfoResponse getFansAndIdolCount(@PathVariable Integer userId) {
-//        return userInfoService.selectUserInfo(userId);
-//    }
+
+    @PostMapping("/getUserInfoBatch")
+    @ApiOperation("批量获取用户信息")
+    public Result<List<UserInfoBatchResponseItem>> getUserInfoBatch(@RequestBody UserInfoBatchRequest request) {
+        return userInfoService.getUserInfoBatch(request);
+    }
+
+    @GetMapping("/getUserInfoSimple/{selfId}/{visitedId}")
+    @ApiOperation("获取用户信息简化响应")
+    public Result<UserInfoBatchResponseItem> getUserInfoSimple(@PathVariable Integer selfId, @PathVariable Integer visitedId) {
+        return userInfoService.getUserInfoSimple(selfId, visitedId);
+    }
+
     @PostMapping("/editUserInfo")
     @ApiOperation("编辑个人信息")
     public Result<Boolean> editUserInfo(@RequestParam("file") MultipartFile file,@RequestParam("userId") Integer userId,@RequestParam("nickname") String nickname,@RequestParam("intro") String intro) throws ServerException, InsufficientDataException, ErrorResponseException, IOException, NoSuchAlgorithmException, InvalidKeyException, InvalidResponseException, XmlParserException, InternalException {

@@ -9,6 +9,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 
 @Configuration
 public class RedisConfig {
@@ -56,6 +57,16 @@ public class RedisConfig {
         template.setHashValueSerializer(RedisSerializer.string());
         template.setConnectionFactory(redisConnectionFactory);
         return template;
+    }
+
+    @Bean
+    public DefaultRedisScript<Long> incrementWindowScript() {
+        DefaultRedisScript<Long> script = new DefaultRedisScript<>();
+        script.setResultType(Long.class);
+        script.setScriptText("local current = redis.call('INCR', KEYS[1]) " +
+                "if current == 1 then redis.call('EXPIRE', KEYS[1], ARGV[1]) end " +
+                "return current");
+        return script;
     }
 
 

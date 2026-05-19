@@ -1,5 +1,6 @@
 package ljl.bilibili.gateway.config;
 import ljl.bilibili.gateway.filter.JwtAuthorizationFilter;
+import ljl.bilibili.gateway.filter.UserInfoAggregateFilter;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.http.HttpMessageConverters;
@@ -26,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      *放行路径与权限要求，添加自定义权限校验器，不交与Spring管理解决重复经过过滤器的问题
      */
     @Bean
-    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http) {
+    public SecurityWebFilterChain springSecurityFilterChain(ServerHttpSecurity http, UserInfoAggregateFilter userInfoAggregateFilter) {
         http
                 .authorizeExchange()
                 //放行路径
@@ -48,6 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 //禁用表单认证
                 .formLogin().disable()
+                .addFilterBefore(userInfoAggregateFilter, SecurityWebFiltersOrder.AUTHORIZATION)
                 //使用自定义过滤器替换默认过滤器
                 .addFilterAt(new JwtAuthorizationFilter(),SecurityWebFiltersOrder.AUTHORIZATION)
                 //禁止csrf令牌防护

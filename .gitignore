@@ -6,6 +6,7 @@
 # 忽略根目录下所有的 .html 文件
 /*.html
 /*.txt
+*.class
 
 # 忽略根目录下所有的 .pdf 文件
 /*.pdf

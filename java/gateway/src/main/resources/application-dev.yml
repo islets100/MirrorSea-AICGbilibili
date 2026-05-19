@@ -76,6 +76,19 @@ spring:
             - Path=/search/**
 
 
+user-info-aggregate:
+  enabled: true
+  compensation-enabled: true
+  hot-threshold-per-second: 100
+  queue-capacity: 2000
+  max-batch-size: 100
+  max-wait-millis: 10
+  future-timeout-millis: 120
+  second-window-expire-seconds: 2
+  minute-window-expire-seconds: 120
+  compensation-poll-interval-ms: 5000
+  compensation-max-retry: 3
+
 module-name: gateway
 #logging:
 #  level:

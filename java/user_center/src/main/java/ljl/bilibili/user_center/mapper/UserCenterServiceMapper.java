@@ -3,6 +3,7 @@ package ljl.bilibili.user_center.mapper;
 import ljl.bilibili.user_center.vo.response.self_center.SelfCollectResponse;
 import ljl.bilibili.user_center.vo.response.self_center.UserInfoResponse;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import java.util.List;
 
@@ -13,4 +14,21 @@ public interface UserCenterServiceMapper {
 
     @Select("SELECT t.cover,t.intro,t.id,t.nickname,SUM(t2.like_count) AS likeCount,SUM(t2.play_count) AS playCount   FROM user t LEFT JOIN video t1 ON (t1.user_id = t.id) LEFT JOIN video_data t2 ON (t2.video_id = t1.id) WHERE   (t.id = #{visitedId})")
     UserInfoResponse getUserInfo(Integer visitedId);
+
+    @Select({
+            "<script>",
+            "SELECT t.cover,t.intro,t.id,t.nickname,",
+            "COALESCE(SUM(t2.like_count),0) AS likeCount,",
+            "COALESCE(SUM(t2.play_count),0) AS playCount",
+            "FROM user t ",
+            "LEFT JOIN video t1 ON (t1.user_id = t.id) ",
+            "LEFT JOIN video_data t2 ON (t2.video_id = t1.id) ",
+            "WHERE t.id IN ",
+            "<foreach item='visitedId' collection='visitedIds' open='(' separator=',' close=')'>",
+            "#{visitedId}",
+            "</foreach>",
+            "GROUP BY t.id,t.cover,t.intro,t.nickname",
+            "</script>"
+    })
+    List<UserInfoResponse> getUserInfoBatch(@Param("visitedIds") List<Integer> visitedIds);
 }

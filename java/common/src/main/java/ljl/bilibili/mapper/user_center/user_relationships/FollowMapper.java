@@ -4,6 +4,7 @@ import com.github.yulichang.base.MPJBaseMapper;
 import ljl.bilibili.entity.user_center.user_relationships.Follow;
 import ljl.bilibili.entity.user_center.user_relationships.IdCount;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -48,4 +49,17 @@ public interface FollowMapper extends MPJBaseMapper<Follow> {
             "</script>"
     })
     List<IdCount> getVideoCount(List<Integer> ids);
+
+    @Select({
+            "<script>",
+            "SELECT idol_id",
+            "FROM follow",
+            "WHERE fans_id = #{selfId}",
+            "AND idol_id IN",
+            "<foreach item='visitedId' collection='visitedIds' open='(' separator=',' close=')'>",
+            "#{visitedId}",
+            "</foreach>",
+            "</script>"
+    })
+    List<Integer> getFollowingVisitedIds(@Param("selfId") Integer selfId, @Param("visitedIds") List<Integer> visitedIds);
 }
